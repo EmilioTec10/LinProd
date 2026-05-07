@@ -29,6 +29,12 @@ LinProd/
 ## Quick start
 
 1. Create and activate a virtual environment.
+
+     ```bash
+	 python -m venv .venv
+    .\.venv\Scripts\Activate
+	 ```
+
 2. Install dependencies:
 
 	 ```bash
@@ -46,6 +52,7 @@ LinProd/
 	 ```bash
 	 pytest -vv
 	 ```
+
 
 ## Environment variables
 
