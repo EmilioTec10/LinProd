@@ -1,0 +1,150 @@
+@startuml
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+title LinProd - Simulator Class Diagram
+
+package "User Interface" {
+  class SimulationGUI {
+    +createProcess()
+    +configureProcess()
+    +markInitialProcess()
+    +markFinalProcess()
+    +linkProcesses()
+    +runSimulation()
+    +pauseSimulation(t)
+    +showSnapshot()
+    +showReport()
+  }
+}
+
+package "Simulation Control" {
+  class SimulationController {
+    +start()
+    +pauseAt(t)
+    +reset()
+    +advanceCycle()
+  }
+
+  class CycleClock {
+    +currentTime: int
+    +tick()
+    +setTime(t)
+  }
+
+  class SnapshotPrinter {
+    +printState()
+  }
+}
+
+package "Domain Model" {
+  class ProductionLine {
+    +name: string
+    +initialProcess: Process
+    +finalProcess: Process
+    +addProcess()
+    +linkProcess()
+    +setInitialProcess()
+    +setFinalProcess()
+    +resetLine()
+  }
+
+  class Process {
+    +name: string
+    +isInitial: bool
+    +isFinal: bool
+    +inputProcess: Process
+    +tasks: Task[*]
+    +addTask()
+    +getNextTask()
+    +setPreviousProcess()
+  }
+
+  class Task {
+    +name: string
+    +processingTime: int
+    +busy: bool
+    +currentProduct: Product
+    +waitingQueue: Queue
+    +startProcessing()
+    +finishProcessing()
+    +acceptProduct()
+  }
+
+  class Product {
+    +id: string
+    +arrivalTime: int
+    +startTime: int
+    +finishTime: int
+    +status: string
+  }
+
+  class Queue {
+    +items: Product[*]
+    +enqueue()
+    +dequeue()
+    +size(): int
+  }
+}
+
+package "Reporting" {
+  class ReportGenerator {
+    +generateFinalReport()
+    +generateBottleneckReport()
+    +generateWaitingTimeReport()
+  }
+
+  class ProductionReport {
+    +firstProductFinishTime: int
+    +lastProductFinishTime: int
+    +averageFinishTime: float
+    +bottleneckProcess: string
+    +averageWaitingTime: float
+    +maxWaitingProcessAndTask: string
+    +totalProcessingTime: int
+  }
+}
+
+SimulationGUI --> SimulationController : user actions
+SimulationController --> ProductionLine : controls
+SimulationController --> CycleClock : advances time
+SimulationController --> SnapshotPrinter : requests snapshot
+SimulationController --> ReportGenerator : requests report
+ProductionLine "1" o-- "1" Process : initial
+ProductionLine "1" o-- "1" Process : final
+ProductionLine "1" o-- "*" Process : contains
+Process "1" *-- "*" Task : ordered tasks
+Task "1" o-- "*" Queue : FIFO waiting
+Task --> Product : processes
+Queue --> Product : stores waiting products
+ReportGenerator --> ProductionReport : creates
+SnapshotPrinter --> ProductionLine : reads state
+
+note right of ProductionLine
+  Requirements reflected here:
+  - one or more processes
+  - unlimited tasks per process
+  - explicit initial and final process
+  - runtime creation and linking
+end note
+
+note right of Task
+  Each task:
+  - has a processing time
+  - handles one product at a time
+  - keeps products waiting in FIFO order
+  - may be paused and inspected
+end note
+
+note right of ProductionReport
+  Report must include:
+  - first and last completion time
+  - average completion time
+  - bottleneck process
+  - average waiting time
+  - max waiting process/task
+  - total processing time
+end note
+
+@enduml
