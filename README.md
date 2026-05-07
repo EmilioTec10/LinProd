@@ -44,7 +44,7 @@ LinProd/
 4. Run tests:
 
 	 ```bash
-	 pytest
+	 pytest -vv
 	 ```
 
 ## Environment variables
