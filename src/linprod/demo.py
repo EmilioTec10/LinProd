@@ -9,6 +9,7 @@ Run with: python -m linprod.demo
 from __future__ import annotations
 
 from linprod.domain.models import ProductionLine, Process, Task
+from linprod.reporting import generate_line_report
 
 
 def ask(prompt: str) -> str:
@@ -40,7 +41,8 @@ def run() -> None:
         print("  5) Link processes (previous -> next)")
         print("  6) Show line configuration")
         print("  7) Show full production line")
-        print("  8) Reset line")
+        print("  8) Generate report")
+        print("  9) Reset line")
         print("  0) Exit")
 
         choice = ask("Action number: ").strip()
@@ -160,6 +162,21 @@ def run() -> None:
             continue
 
         if choice == "8":
+            report = generate_line_report(line)
+            print(f"\n=== Production Report: {report.line_name} ===")
+            print(f"Total Processes: {report.total_processes}")
+            print(f"Total Tasks: {report.total_tasks}")
+            if report.total_cycle_time is not None:
+                print(f"Total Processing Time (sum of all task times): {report.total_cycle_time}")
+            if report.bottleneck_process:
+                print(f"Bottleneck Process: {report.bottleneck_process} ({report.bottleneck_waiting_time})")
+            print("\nReport Notes:")
+            for note in report.notes:
+                print(f"  - {note}")
+            print("")
+            continue
+
+        if choice == "9":
             line.reset_line()
             line.processes = []
             print("Line reset (process list cleared, initial/final unset).")
