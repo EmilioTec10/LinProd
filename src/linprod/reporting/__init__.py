@@ -1,5 +1,6 @@
-"""Reporting model for LinProd."""
+"""Production reporting module."""
 
-from .models import ProductionReport
+from linprod.reporting.models import ProductionReport
+from linprod.reporting.service import generate_line_report
 
-__all__ = ["ProductionReport"]
+__all__ = ["ProductionReport", "generate_line_report"]

@@ -143,13 +143,28 @@ class ProductionLine:
         self.processes.append(process)
 
     def link_process(self, previous_process: Process, next_process: Process) -> None:
+        if next_process.is_initial:
+            raise ValueError("cannot link to a process marked as initial")
         next_process.set_previous_process(previous_process)
 
     def set_initial_process(self, process: Process) -> None:
+        if self.final_process is process:
+            raise ValueError("a process cannot be both initial and final")
+        if process.input_process is not None:
+            raise ValueError("initial process cannot have a predecessor")
+        if self.initial_process is not None and self.initial_process is not process:
+            self.initial_process.is_initial = False
         self.initial_process = process
         process.is_initial = True
 
     def set_final_process(self, process: Process) -> None:
+        if self.initial_process is process:
+            raise ValueError("a process cannot be both initial and final")
+        for p in self.processes:
+            if p.input_process is process:
+                raise ValueError("final process cannot have a successor")
+        if self.final_process is not None and self.final_process is not process:
+            self.final_process.is_final = False
         self.final_process = process
         process.is_final = True
 
