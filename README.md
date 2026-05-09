@@ -18,9 +18,17 @@ LinProd/
 		linprod/
 			__init__.py
 			config.py
+			domain/
+				__init__.py
+				models.py
 			main.py
+			simulation/
+				__init__.py
+				controller.py
 	tests/
+		test_domain_model.py
 		test_main.py
+		test_simulation_control.py
 	.gitignore
 	pyproject.toml
 	README.md
