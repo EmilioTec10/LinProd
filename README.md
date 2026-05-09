@@ -7,6 +7,8 @@ LinProd is now bootstrapped with a clean Python startup structure so you can beg
 - Source layout using `src/`
 - Application entrypoint with a basic startup flow
 - Environment-based configuration
+- Domain model for the production line simulator
+- Reporting data model for final simulation metrics
 - Test scaffold with `pytest`
 - Packaging and tool config in `pyproject.toml`
 
