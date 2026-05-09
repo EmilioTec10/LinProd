@@ -115,3 +115,39 @@ def test_process_cannot_be_both_initial_and_final() -> None:
     line.set_final_process(process_b)
     with pytest.raises(ValueError):
         line.set_initial_process(process_b)
+
+
+def test_initial_process_cannot_have_predecessor() -> None:
+    process_a = Process(name="Process A")
+    process_b = Process(name="Process B")
+    line = ProductionLine(name="Main line")
+    line.add_process(process_a)
+    line.add_process(process_b)
+
+    line.link_process(process_a, process_b)
+    with pytest.raises(ValueError):
+        line.set_initial_process(process_b)
+
+
+def test_final_process_cannot_have_successor() -> None:
+    process_a = Process(name="Process A")
+    process_b = Process(name="Process B")
+    line = ProductionLine(name="Main line")
+    line.add_process(process_a)
+    line.add_process(process_b)
+
+    line.link_process(process_a, process_b)
+    with pytest.raises(ValueError):
+        line.set_final_process(process_a)
+
+
+def test_cannot_link_to_initial_process() -> None:
+    process_a = Process(name="Process A")
+    process_b = Process(name="Process B")
+    line = ProductionLine(name="Main line")
+    line.add_process(process_a)
+    line.add_process(process_b)
+
+    line.set_initial_process(process_b)
+    with pytest.raises(ValueError):
+        line.link_process(process_a, process_b)

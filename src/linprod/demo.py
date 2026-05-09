@@ -39,7 +39,8 @@ def run() -> None:
         print("  4) Set process as final")
         print("  5) Link processes (previous -> next)")
         print("  6) Show line configuration")
-        print("  7) Reset line")
+        print("  7) Show full production line")
+        print("  8) Reset line")
         print("  0) Exit")
 
         choice = ask("Action number: ").strip()
@@ -111,7 +112,11 @@ def run() -> None:
             if p_prev is None or p_next is None:
                 print("Both processes must exist. Create them first.")
                 continue
-            line.link_process(p_prev, p_next)
+            try:
+                line.link_process(p_prev, p_next)
+            except ValueError as exc:
+                print(f"Cannot link processes: {exc}")
+                continue
             print(f"Linked '{p_prev.name}' -> '{p_next.name}'.")
             continue
 
@@ -132,6 +137,29 @@ def run() -> None:
             continue
 
         if choice == "7":
+            print(f"\nProduction line flow: {line.name}")
+            if not line.processes:
+                print("  (no processes)")
+            elif line.initial_process is None:
+                print("  (no initial process set)")
+            else:
+                current = line.initial_process
+                path = []
+                visited = set()
+                while current is not None and current.name not in visited:
+                    path.append(current.name)
+                    visited.add(current.name)
+                    next_proc = None
+                    for p in line.processes:
+                        if p.input_process is current:
+                            next_proc = p
+                            break
+                    current = next_proc
+                print("  " + " -> ".join(path))
+            print("")
+            continue
+
+        if choice == "8":
             line.reset_line()
             line.processes = []
             print("Line reset (process list cleared, initial/final unset).")
