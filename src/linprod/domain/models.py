@@ -146,10 +146,18 @@ class ProductionLine:
         next_process.set_previous_process(previous_process)
 
     def set_initial_process(self, process: Process) -> None:
+        if self.final_process is process:
+            raise ValueError("a process cannot be both initial and final")
+        if self.initial_process is not None and self.initial_process is not process:
+            self.initial_process.is_initial = False
         self.initial_process = process
         process.is_initial = True
 
     def set_final_process(self, process: Process) -> None:
+        if self.initial_process is process:
+            raise ValueError("a process cannot be both initial and final")
+        if self.final_process is not None and self.final_process is not process:
+            self.final_process.is_final = False
         self.final_process = process
         process.is_final = True
 

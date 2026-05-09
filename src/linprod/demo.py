@@ -79,7 +79,11 @@ def run() -> None:
                 continue
             if line.initial_process is not None:
                 print(f"Replacing previous initial process '{line.initial_process.name}'.")
-            line.set_initial_process(proc)
+            try:
+                line.set_initial_process(proc)
+            except ValueError as exc:
+                print(f"Cannot set initial process: {exc}")
+                continue
             print(f"Process '{proc.name}' set as initial.")
             continue
 
@@ -91,7 +95,11 @@ def run() -> None:
                 continue
             if line.final_process is not None:
                 print(f"Replacing previous final process '{line.final_process.name}'.")
-            line.set_final_process(proc)
+            try:
+                line.set_final_process(proc)
+            except ValueError as exc:
+                print(f"Cannot set final process: {exc}")
+                continue
             print(f"Process '{proc.name}' set as final.")
             continue
 

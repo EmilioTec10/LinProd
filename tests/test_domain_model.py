@@ -1,4 +1,5 @@
 from linprod.domain import Product, Queue, Task, Process, ProductionLine
+import pytest
 
 
 def test_queue_behaves_fifo() -> None:
@@ -73,3 +74,44 @@ def test_process_and_line_linking() -> None:
     assert process_a.is_initial is False
     assert process_c.is_final is False
     assert process_b.input_process is None
+
+
+def test_replacing_initial_and_final_process_clears_previous_flags() -> None:
+    process_a = Process(name="Process A")
+    process_b = Process(name="Process B")
+    process_c = Process(name="Process C")
+
+    line = ProductionLine(name="Main line")
+    line.add_process(process_a)
+    line.add_process(process_b)
+    line.add_process(process_c)
+
+    line.set_initial_process(process_a)
+    line.set_initial_process(process_b)
+
+    assert line.initial_process is process_b
+    assert process_a.is_initial is False
+    assert process_b.is_initial is True
+
+    line.set_final_process(process_c)
+    line.set_final_process(process_a)
+
+    assert line.final_process is process_a
+    assert process_c.is_final is False
+    assert process_a.is_final is True
+
+
+def test_process_cannot_be_both_initial_and_final() -> None:
+    process_a = Process(name="Process A")
+    process_b = Process(name="Process B")
+    line = ProductionLine(name="Main line")
+    line.add_process(process_a)
+    line.add_process(process_b)
+
+    line.set_initial_process(process_a)
+    with pytest.raises(ValueError):
+        line.set_final_process(process_a)
+
+    line.set_final_process(process_b)
+    with pytest.raises(ValueError):
+        line.set_initial_process(process_b)
