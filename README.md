@@ -7,6 +7,8 @@ LinProd is now bootstrapped with a clean Python startup structure so you can beg
 - Source layout using `src/`
 - Application entrypoint with a basic startup flow
 - Environment-based configuration
+- Domain model for the production line simulator
+- Reporting data model for final simulation metrics
 - Test scaffold with `pytest`
 - Packaging and tool config in `pyproject.toml`
 
@@ -22,12 +24,16 @@ LinProd/
 				__init__.py
 				models.py
 			main.py
+			reporting/
+				__init__.py
+				models.py
 			simulation/
 				__init__.py
 				controller.py
 	tests/
 		test_domain_model.py
 		test_main.py
+		test_reporting_model.py
 		test_simulation_control.py
 	.gitignore
 	pyproject.toml
@@ -61,6 +67,12 @@ LinProd/
 	 pytest -vv
 	 ```
 
+5. Run the console smoke test:
+
+	 ```bash
+	 linprod-smoke
+	 ```
+
 
 ## Environment variables
 
@@ -69,6 +81,6 @@ LinProd/
 
 ## Next build steps
 
-1. Add your core domain models and business logic under `src/linprod/`.
-2. Add API or UI interfaces depending on your target platform.
+1. Add the reporting service that computes the final metrics from simulation results.
+2. Add the simulation engine that moves products through tasks cycle by cycle.
 3. Expand tests for all critical paths.
