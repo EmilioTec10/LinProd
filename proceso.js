@@ -1,3 +1,4 @@
+//animacion de entrada escalonada
 const processAnimated = document.querySelectorAll(
   '.top-card, .process-list, .process-form-panel, .form-block, .actions, .hint'
 );
@@ -9,6 +10,7 @@ requestAnimationFrame(() => {
   });
 });
 
+//cambios de posicion en orden de procesos
 const positionOptions = document.querySelectorAll('.radio-option input[name="posicion"]');
 positionOptions.forEach((option) => {
   option.addEventListener('change', () => {
@@ -19,12 +21,14 @@ positionOptions.forEach((option) => {
   });
 });
 
+//campos de formulario para ingresas procesos
 const processName = document.querySelector('#nombre-proceso');
 const taskName = document.querySelector('#nombre-tarea');
 const taskCycles = document.querySelector('#ciclos');
 const addTaskButton = document.querySelector('.add-task-btn');
 const helperHint = document.querySelector('.hint');
 
+//agregar una nueva tarea
 const refreshAddTaskState = () => {
   if (!addTaskButton || !taskName || !taskCycles) {
     return;
@@ -36,6 +40,7 @@ const refreshAddTaskState = () => {
   const processReady = processName && processName.value.trim().length > 0;
   const canAddTask = hasTaskName && hasValidCycles && processReady;
 
+  //habilita odeshabilitar el botón
   addTaskButton.disabled = !canAddTask;
   addTaskButton.classList.toggle('disabled', !canAddTask);
   addTaskButton.classList.toggle('enabled', canAddTask);
@@ -47,12 +52,14 @@ const refreshAddTaskState = () => {
   }
 };
 
+//lee los cambios en todos los campos para revalidar el tiempo
 [processName, taskName, taskCycles].forEach((field) => {
   if (field) {
     field.addEventListener('input', refreshAddTaskState);
   }
 });
 
+//guardar tareas
 if (addTaskButton) {
   addTaskButton.addEventListener('click', () => {
     if (!addTaskButton.disabled) {
