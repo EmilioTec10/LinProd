@@ -25,6 +25,7 @@ function _injectIcons() {
     else if (label === 'Progreso')            icon.src = _svgUri(_SVG.BARCHART);
   });
 
+  //botón de reinicio
   document.querySelectorAll('.icon-control.warn img')
     .forEach(img => { img.src = _svgUri(_SVG.RESTART); });
 
@@ -91,12 +92,14 @@ function _downloadReport(report, state, isPartial) {
   const products = report.products    || [];
   const now      = new Date().toLocaleString('es-MX');
 
+  //banner en caso de que la producción no este completa al descargar
   const partialBanner = isPartial
     ? `<div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:12px 16px;margin-bottom:24px;color:#856404;">
          &#9888; Reporte parcial — producción pausada en ciclo ${state.current_cycle}
        </div>`
     : '';
 
+  //filas de métricas globales
   const metRows = Object.keys(metrics).length > 0 ? `
     <tr><td>Primer producto</td><td>${fmt(metrics.first_completion_cycle)}</td></tr>
     <tr><td>Último producto</td><td>${fmt(metrics.last_completion_cycle)}</td></tr>
