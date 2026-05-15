@@ -935,8 +935,9 @@ body {
   min-width: 221px;
   border: 0;
   border-radius: 16px;
-  background: #d17a22;
-  color: #fff;
+  background: var(--white);
+  color: var(--title);
+  border: 2px solid #d17a22;
   display: inline-flex;
   align-items: center;
   justify-content: center;
