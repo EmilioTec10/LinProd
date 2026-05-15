@@ -808,6 +808,8 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 8px;
+  background: transparent;
+  color: var(--white);
 }
 
 .process-tasks {
@@ -945,6 +947,12 @@ body {
   font-weight: 500;
   font-family: "Nunito", sans-serif;
   cursor: pointer;
+}
+
+/* Make the inline image/icon inside the download button appear white */
+.download-btn img,
+.download-btn .add-process-icon {
+  filter: brightness(0) invert(1);
 }
 
 .download-btn img {
