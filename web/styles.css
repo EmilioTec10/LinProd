@@ -933,20 +933,26 @@ body {
 .download-btn {
   height: 52px;
   min-width: 221px;
-  border: 2px solid #e5e7eb;
+  border: 0;
   border-radius: 16px;
-  background: #fff;
-  color: var(--title);
+  background: #d17a22;
+  color: #fff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 0 22px;
+  padding: 0 24px;
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
   font-family: "Nunito", sans-serif;
   cursor: pointer;
+}
+
+/* Make the inline image/icon inside the download button appear white */
+.download-btn img,
+.download-btn .add-process-icon {
+  filter: brightness(0) invert(1);
 }
 
 .download-btn img {
