@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Producción Completada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="screen live-screen" data-node-id="9:1307" data-name="Optimizar mockup de producción">
+      <section class="live-body" data-node-id="9:1308" data-name="Body">
+        <div class="live-container" data-node-id="9:1309" data-name="Container">
+
+          <!-- Header -->
+          <header class="live-header" data-node-id="9:1310" data-name="Container">
+            <div class="live-title-block" data-node-id="9:1312" data-name="Container">
+              <img
+                class="live-logo"
+                data-node-id="9:1313"
+                data-name="Image (Production)"
+                src="http://localhost:3845/assets/ed13cc7a5d838747801a5b4220d99361f22c3775.png"
+                alt="Producción"
+              />
+              <div class="live-title-copy" data-node-id="9:1314" data-name="Container">
+                <h1 data-node-id="9:1315">Producción en Marcha</h1>
+                <p data-node-id="9:1317">Monitoreo en tiempo real</p>
+              </div>
+            </div>
+            <div class="paused-header-actions" data-node-id="9:1319" data-name="Container">
+              <button class="download-btn" type="button" data-node-id="9:1320" data-name="Button">
+                <img src="http://localhost:3845/assets/8311702ad1594d66c640a0b1d74c59473b7e079c.svg" alt="" aria-hidden="true" />
+                <span>Descargar Resumen</span>
+              </button>
+              <button class="back-config-btn" type="button" data-node-id="9:1326" data-name="Button">
+                Volver a Configuración
+              </button>
+            </div>
+          </header>
+
+          <!-- Stat cards -->
+          <section class="live-stats" data-node-id="9:1328" data-name="Container">
+            <article class="stat-card" data-node-id="9:1329" data-name="Container">
+              <img class="stat-icon" src="http://localhost:3845/assets/e8e4216a301dabda83d67fca39991c596b5a0b4b.svg" alt="" aria-hidden="true" />
+              <div>
+                <p class="stat-label">Tiempo Transcurrido</p>
+                <p class="stat-value" id="stat-elapsed">9:59</p>
+              </div>
+            </article>
+
+            <article class="stat-card" data-node-id="9:1339" data-name="Container">
+              <img class="stat-icon" src="http://localhost:3845/assets/458b9c774a06bac57e1fffc3153cc56ebf8015c9.svg" alt="" aria-hidden="true" />
+              <div>
+                <p class="stat-label">Tiempo Restante</p>
+                <p class="stat-value" id="stat-remaining">0:00</p>
+              </div>
+            </article>
+
+            <article class="stat-card" data-node-id="9:1349" data-name="Container">
+              <img class="stat-icon" src="http://localhost:3845/assets/2717ffa38439c8880e6a87b7568280e816dc5ef6.svg" alt="" aria-hidden="true" />
+              <div>
+                <p class="stat-label">Productos</p>
+                <p class="stat-value" id="stat-products">5 / 5</p>
+              </div>
+            </article>
+
+            <article class="stat-card" data-node-id="9:1361" data-name="Container">
+              <img class="stat-icon" src="http://localhost:3845/assets/187d48cdfe8961485066446e4fe027f4bcd18c16.svg" alt="" aria-hidden="true" />
+              <div>
+                <p class="stat-label">Progreso</p>
+                <p class="stat-value accent" id="stat-progress">100%</p>
+              </div>
+            </article>
+          </section>
+
+          <!-- Main area -->
+          <section class="live-main" data-node-id="9:1373" data-name="Container">
+            <article class="live-current" data-node-id="9:1374" data-name="Container">
+
+              <!-- Estado Actual header — only warn button (orange) -->
+              <div class="live-current-head" data-node-id="9:1375" data-name="Container">
+                <h2 data-node-id="9:1376">Estado Actual</h2>
+                <div class="live-actions" data-node-id="9:1375b" data-name="Container">
+                  <button class="icon-control warn completed-warn" type="button" title="Advertencia">
+                    <img src="http://localhost:3845/assets/a1fe0403ab3c13534f51b12896ad6f18d2b737c2.svg" alt="" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+
+              <!-- Completion banner -->
+              <div class="completed-banner" data-node-id="9:1382" data-name="Container">
+                <img
+                  class="completed-icon"
+                  src="http://localhost:3845/assets/c26d56d28d181f3c984ba4a041ef2052c73a2fe9.svg"
+                  alt=""
+                  aria-hidden="true"
+                  data-node-id="9:1383"
+                />
+                <h3 data-node-id="9:1386">¡Producción Completada!</h3>
+                <p id="completed-subtitle" data-node-id="9:1388">5 productos finalizados</p>
+              </div>
+
+              <!-- Last process timeline card -->
+              <div class="live-timeline" data-node-id="9:1390" data-name="Container">
+                <div class="timeline-card" data-node-id="9:1391" data-name="Container">
+                  <div class="timeline-head" data-node-id="9:1392" data-name="Container">
+                    <span class="timeline-index" id="completed-proc-index">1</span>
+                    <span class="timeline-name" id="completed-proc-name">s</span>
+                  </div>
+                  <div class="timeline-task completed-task-row" data-node-id="9:1396" data-name="Container">
+                    <span class="dot">•</span>
+                    <span id="completed-task-name">q</span>
+                    <span class="muted" id="completed-task-dur">· 2 min</span>
+                  </div>
+                </div>
+              </div>
+
+            </article>
+
+            <!-- Summary sidebar -->
+            <aside class="live-summary completed-summary" data-node-id="14:2321" data-name="Container">
+              <h2>Resumen</h2>
+
+              <section class="summary-group" data-node-id="14:2325" data-name="Container">
+                <h3>CONFIGURACIÓN</h3>
+                <div class="summary-row"><span>Procesos</span><strong id="cfg-processes">1</strong></div>
+                <div class="summary-row"><span>Tareas</span><strong id="cfg-tasks">1</strong></div>
+                <div class="summary-row"><span>Tiempo/producto</span><strong id="cfg-time-per">2:00</strong></div>
+              </section>
+
+              <section class="summary-group divider" data-node-id="14:2344" data-name="Container">
+                <h3>RENDIMIENTO</h3>
+                <div class="summary-row"><span>Productos/hora</span><strong id="perf-pph">30.0</strong></div>
+                <div class="summary-row"><span>Eficiencia</span><strong class="accent" id="perf-eff">100%</strong></div>
+              </section>
+
+              <section class="summary-group divider" data-node-id="14:2358" data-name="Container">
+                <h3>MÉTRICAS</h3>
+                <div class="summary-row"><span>Primer producto</span><strong id="met-first">—</strong></div>
+                <div class="summary-row"><span>Último producto</span><strong id="met-last">—</strong></div>
+                <div class="summary-row"><span>Tiempo promedio</span><strong id="met-avg">—</strong></div>
+                <div class="summary-row"><span>Tiempo total</span><strong class="accent" id="met-total">—</strong></div>
+                <div class="summary-detail" data-node-id="14:2382" data-name="Container">
+                  <span class="summary-detail-label">Mayor congestionamiento</span>
+                  <strong class="summary-detail-value" id="met-bottleneck-name">—</strong>
+                  <span class="summary-detail-sub" id="met-bottleneck-time">—</span>
+                </div>
+                <div class="summary-detail" data-node-id="14:2386" data-name="Container">
+                  <span class="summary-detail-label">Tarea más larga</span>
+                  <strong class="summary-detail-value" id="met-longest-task">—</strong>
+                  <span class="summary-detail-sub" id="met-longest-task-sub">—</span>
+                </div>
+              </section>
+
+              <section class="summary-group divider" data-node-id="14:2390" data-name="Container">
+                <h3>PROGRESO</h3>
+                <div class="summary-row compact">
+                  <span id="summary-process-name">s</span>
+                  <strong class="muted-strong" id="summary-pct">100%</strong>
+                </div>
+                <div class="mini-track">
+                  <div class="mini-fill" id="summary-fill" style="width:100%"></div>
+                </div>
+              </section>
+            </aside>
+          </section>
+
+        </div>
+      </section>
+    </main>
+    <!-- Reiniciar modal (node 9:1595) -->
+    <div class="modal-backdrop" id="restart-modal" role="dialog" aria-modal="true" aria-labelledby="restart-modal-title" hidden>
+      <div class="modal-card" data-node-id="9:1595">
+        <h3 class="modal-title" id="restart-modal-title" data-node-id="9:1596">Reiniciar Producción</h3>
+        <p class="modal-body" data-node-id="9:1598">
+          ¿Estás seguro de que deseas reiniciar la producción? Se perderá todo el progreso actual y comenzarás desde cero.
+        </p>
+        <div class="modal-actions" data-node-id="9:1600">
+          <button class="modal-btn modal-cancel" type="button" id="restart-cancel" data-node-id="9:1601">Cancelar</button>
+          <button class="modal-btn modal-restart" type="button" id="restart-confirm" data-node-id="9:1603">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="produccion-completada.js"></script>
+  </body>
+</html>
