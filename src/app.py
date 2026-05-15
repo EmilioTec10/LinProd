@@ -3,13 +3,16 @@ app.py — Flask frontend for the LinProd production-line simulator.
 Run with: python3 app.py
 """
 
+import os
 from linprod_core import ProductionLine, Process, Task
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-#inicia la aplicación Flask
-#la carpeta raíz hace de directorio de archivos estaticos
-app = Flask(__name__, static_folder='.', static_url_path='')
+# inicia la aplicación Flask
+# sirve archivos estáticos desde el directorio `web/` at repo root
+HERE = os.path.dirname(__file__)
+STATIC_DIR = os.path.normpath(os.path.join(HERE, '..', 'web'))
+app = Flask(__name__, static_folder=STATIC_DIR, static_url_path='')
 CORS(app)
 
 #activa la linea de producción
