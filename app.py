@@ -51,6 +51,11 @@ def _serial_process(process: Process, idx: int) -> dict:
 
 
 def _serial_state() -> dict:
+    completed = line.completed_products
+    durations = [p.exit_cycle - p.entry_cycle for p in completed if p.exit_cycle is not None]
+    avg_dur   = sum(durations) / len(durations) if durations else 0
+    total_cpp = sum(t.process_time for proc in line.processes for t in proc.tasks)
+    eff_pct   = round(total_cpp / avg_dur * 100, 1) if avg_dur > 0 else 0
     return {
         'current_cycle': line.current_cycle,
         'is_running': line.is_running,
@@ -59,6 +64,7 @@ def _serial_state() -> dict:
         'completed_count': len(line.completed_products),
         'num_products': line.num_products,
         'products_injected': line._products_injected,
+        'efficiency_pct': eff_pct,
         'state': {
             'processes': [_serial_process(p, pi) for pi, p in enumerate(line.processes)],
         },
@@ -83,7 +89,7 @@ def _serial_report() -> dict:
         },
         'performance': {
             'products_per_hour': pph,
-            'efficiency_pct': 100,
+            'efficiency_pct': 0,
         },
         'metrics': {},
         'products': [],
@@ -95,6 +101,8 @@ def _serial_report() -> dict:
     exit_cycles = [p.exit_cycle for p in completed if p.exit_cycle is not None]
     durations   = [p.exit_cycle - p.entry_cycle for p in completed if p.exit_cycle is not None]
     avg_duration = round(sum(durations) / len(durations), 1) if durations else 0
+    efficiency_pct = round(total_cycles_per_product / avg_duration * 100, 1) if avg_duration > 0 else 0
+    base['performance']['efficiency_pct'] = efficiency_pct
 
     bottleneck_task = None
     bottleneck_proc = '—'

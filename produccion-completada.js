@@ -36,6 +36,35 @@ function _injectIcons() {
 }
 _injectIcons();
 
+// Change 1 — Hide .current-task-card (not present in this page's HTML, defensive)
+(function _hideTaskCard() {
+  const card = document.querySelector('.current-task-card');
+  if (card) card.style.display = 'none';
+})();
+
+// Change 2 — Hide PROGRESO section from sidebar
+(function _hideProgresoSection() {
+  const el = document.getElementById('summary-pct');
+  if (el) {
+    const section = el.closest('.summary-group');
+    if (section) section.style.display = 'none';
+  }
+})();
+
+(function _hideTimeline() {
+  const timeline = document.querySelector('.live-timeline');
+  if (timeline) timeline.style.display = 'none';
+  const card = document.querySelector('.timeline-card');
+  if (card) card.style.display = 'none';
+})();
+
+(function _fixHeaderText() {
+  const h1 = document.querySelector('.live-title-copy h1');
+  if (h1) h1.textContent = 'Producción Completada';
+  const sub = document.querySelector('.live-title-copy p');
+  if (sub) sub.textContent = 'Todos los productos finalizados';
+})();
+
 // ---------- Entry animation ----------
 const completedAnimated = document.querySelectorAll(
   '.live-header, .live-stats, .live-current, .completed-summary, .stat-card, .completed-banner'
@@ -146,7 +175,7 @@ ${partialBanner}
 <h2>Rendimiento</h2>
 <div class="grid">
   <div class="card"><p>Productos / hora</p><strong>${perf.products_per_hour ?? '—'}</strong></div>
-  <div class="card"><p>Eficiencia</p><strong>100%</strong></div>
+  <div class="card"><p>Eficiencia</p><strong>${perf.efficiency_pct ?? '—'}%</strong></div>
 </div>
 <h2>Métricas</h2>
 <table><thead><tr><th>Indicador</th><th>Valor</th></tr></thead><tbody>${metRows}</tbody></table>
@@ -218,32 +247,44 @@ let _cachedState  = null;
     document.getElementById('cfg-processes').textContent = cfg.process_count;
     document.getElementById('cfg-tasks').textContent     = cfg.task_count;
     document.getElementById('cfg-time-per').textContent  = fmt(cfg.total_cycles_per_product);
-    document.getElementById('perf-pph').textContent      = perf.products_per_hour;
-
-    // Metrics
-    if (metrics && Object.keys(metrics).length > 0) {
-      document.getElementById('met-first').textContent = fmt(metrics.first_completion_cycle);
-      document.getElementById('met-last').textContent  = fmt(metrics.last_completion_cycle);
-      document.getElementById('met-avg').textContent   = fmt(Math.round(metrics.avg_duration_cycles));
-      document.getElementById('met-total').textContent = fmt(metrics.total_cycles);
-
-      document.getElementById('met-bottleneck-name').textContent =
-        `${metrics.bottleneck_process} → ${metrics.bottleneck_task}`;
-      document.getElementById('met-bottleneck-time').textContent =
-        fmt(metrics.bottleneck_wait_cycles);
-
-      document.getElementById('met-longest-task').textContent = metrics.longest_task_name;
-      document.getElementById('met-longest-task-sub').textContent =
-        `${metrics.longest_task_process} • ${fmt(metrics.longest_task_cycles)}`;
+    const pphEl = document.getElementById('perf-pph');
+    if (pphEl) {
+      pphEl.textContent = perf.products_per_hour;
+      pphEl.title = '1 ciclo de simulación ≈ 1 segundo real';
     }
+    const effEl = document.getElementById('perf-eff');
+    if (effEl) effEl.textContent = perf.efficiency_pct != null ? `${perf.efficiency_pct}%` : '—';
 
-    // PROGRESO section
-    const summaryProc = document.getElementById('summary-process-name');
-    if (summaryProc && state.state.processes.length > 0) {
-      summaryProc.textContent = state.state.processes[0].name;
+    // Changes 3 & 4 — Rewrite MÉTRICAS section with 7 clean rows
+    const metSection = Array.from(document.querySelectorAll('.summary-group h3'))
+      .find(h => h.textContent.trim() === 'MÉTRICAS')
+      ?.closest('.summary-group');
+    if (metSection) {
+      while (metSection.children.length > 1) metSection.removeChild(metSection.lastChild);
+
+      const _metRow = (label, value) => {
+        const row = document.createElement('div');
+        row.className = 'summary-row';
+        row.innerHTML = `<span>${label}</span><strong>${value}</strong>`;
+        return row;
+      };
+
+      if (metrics && Object.keys(metrics).length > 0) {
+        const bn = `${metrics.bottleneck_process} › ${metrics.bottleneck_task}`;
+        metSection.appendChild(_metRow('Primer producto completado',          fmt(metrics.first_completion_cycle)));
+        metSection.appendChild(_metRow('Último producto completado',          fmt(metrics.last_completion_cycle)));
+        metSection.appendChild(_metRow('Tiempo promedio de completación',     fmt(Math.round(metrics.avg_duration_cycles))));
+        metSection.appendChild(_metRow('Proceso con mayor congestionamiento', bn));
+        metSection.appendChild(_metRow('Tiempo promedio de espera',           fmt(Math.round(metrics.avg_wait_time ?? 0))));
+        metSection.appendChild(_metRow('Proceso y tarea con mayor espera',    `${bn} (espera: ${fmt(metrics.bottleneck_wait_cycles)})`));
+        metSection.appendChild(_metRow('Tiempo total de procesamiento',       fmt(metrics.total_cycles)));
+      } else {
+        const empty = document.createElement('p');
+        empty.style.cssText = 'font-size:12px;color:#94a3b8;margin:4px 0;';
+        empty.textContent = 'Sin métricas disponibles';
+        metSection.appendChild(empty);
+      }
     }
-    document.getElementById('summary-pct').textContent  = '100%';
-    document.getElementById('summary-fill').style.width = '100%';
 
   } catch (err) {
     console.error('Error cargando reporte:', err);

@@ -485,6 +485,9 @@ function _injectEditPanel() {
     saveBtn.disabled    = true;
     saveBtn.textContent = 'Guardando…';
 
+    const prevErr = document.getElementById('edit-save-error');
+    if (prevErr) prevErr.remove();
+
     try {
       const res = await fetch(`/api/processes/${_editPanelProc.index}`, {
         method:  'PUT',
@@ -492,12 +495,15 @@ function _injectEditPanel() {
         body:    JSON.stringify({ name: procName, tasks }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      // _closeEditPanel is called by loadProcesses guard, but call explicitly first
-      // so the panel disappears immediately before the list refreshes.
       _closeEditPanel();
       loadProcesses();
     } catch (err) {
-      window.alert(`Error al guardar: ${err.message}`);
+      const errMsg = document.createElement('p');
+      errMsg.id = 'edit-save-error';
+      errMsg.style.cssText = 'color:#dc2626;font-size:12px;margin:4px 0 0;';
+      errMsg.textContent = `Error al guardar: ${err.message}`;
+      saveBtn.insertAdjacentElement('afterend', errMsg);
+    } finally {
       saveBtn.disabled    = false;
       saveBtn.textContent = 'Guardar Cambios';
     }
