@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuevo Proceso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="screen process-screen" data-node-id="9:181" data-name="Optimizar mockup de producción">
+      <section class="planning-body" data-node-id="9:182" data-name="Body">
+        <div class="planning-container process-container" data-node-id="9:183" data-name="Container">
+          <header class="top-card" data-node-id="9:185" data-name="Container">
+            <div class="top-card-row" data-node-id="9:186" data-name="Container">
+              <img
+                class="top-logo"
+                data-node-id="9:187"
+                data-name="Image (Production)"
+                src="http://localhost:3845/assets/ed13cc7a5d838747801a5b4220d99361f22c3775.png"
+                alt="Producción"
+              />
+              <div class="top-heading-wrap" data-node-id="9:188" data-name="Container">
+                <h1 class="top-title" data-node-id="9:189" data-name="Heading 1">
+                  Configuración de Línea de Producción
+                </h1>
+                <p class="top-meta" data-node-id="9:191" data-name="Paragraph">
+                  1 proceso configurado • 0 ciclos totales
+                </p>
+              </div>
+            </div>
+          </header>
+
+          <section class="cards-grid process-grid" data-node-id="9:193" data-name="Container">
+            <article class="panel panel-left process-list" data-node-id="9:194" data-name="Container">
+              <div class="panel-header" data-node-id="9:195" data-name="Container">
+                <h2 class="panel-title" data-node-id="9:196" data-name="Heading 2">Procesos</h2>
+                <button
+                  class="add-process-btn add-process-btn-disabled"
+                  type="button"
+                  disabled
+                  data-node-id="9:198"
+                  data-name="Button"
+                >
+                  <img
+                    class="add-process-icon"
+                    data-node-id="9:199"
+                    data-name="Icon"
+                    src="http://localhost:3845/assets/14facc576a05ff58abb4b7a5e45bbb08d52475bb.svg"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                  <span class="add-process-label" data-node-id="9:202">Agregar Proceso</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="panel process-form-panel" data-node-id="9:203" data-name="Container">
+              <div class="process-form-head" data-node-id="9:204" data-name="Container">
+                <h2 class="panel-title" data-node-id="9:205" data-name="Heading 2">Nuevo Proceso</h2>
+                <p class="top-meta" data-node-id="9:207" data-name="Paragraph">
+                  Configura el nombre, posición y tareas
+                </p>
+              </div>
+
+              <section class="form-block" data-node-id="9:209" data-name="Container">
+                <h3 class="block-title" data-node-id="9:210" data-name="Heading 3">Configuración del Proceso</h3>
+
+                <div class="field" data-node-id="9:213" data-name="Container">
+                  <label class="field-label" for="nombre-proceso" data-node-id="9:214" data-name="Label">
+                    Nombre del proceso
+                  </label>
+                  <input
+                    id="nombre-proceso"
+                    class="text-input"
+                    type="text"
+                    placeholder="Ej: Ensamblaje, Empaquetado..."
+                    data-node-id="9:216"
+                    data-name="Text Input"
+                  />
+                </div>
+
+                <div class="field" data-node-id="9:218" data-name="Container">
+                  <span class="field-label" data-node-id="9:219" data-name="Label">Posición en la línea</span>
+
+                  <label class="radio-option" data-node-id="9:222" data-name="Label">
+                    <input type="radio" name="posicion" value="primero" />
+                    <span class="radio-dot" data-node-id="9:223" data-name="Radio Button"></span>
+                    <span class="radio-copy" data-node-id="9:224" data-name="Container">
+                      <strong>Primero</strong>
+                      <small>Agregar al inicio de la línea</small>
+                    </span>
+                  </label>
+
+                  <label class="radio-option" data-node-id="9:229" data-name="Label">
+                    <input type="radio" name="posicion" value="ultimo" />
+                    <span class="radio-dot" data-node-id="9:230" data-name="Radio Button"></span>
+                    <span class="radio-copy" data-node-id="9:231" data-name="Container">
+                      <strong>Último</strong>
+                      <small>Agregar al final de la línea</small>
+                    </span>
+                  </label>
+
+                  <label class="radio-option selected" data-node-id="9:236" data-name="Label">
+                    <input type="radio" name="posicion" value="cola" checked />
+                    <span class="radio-dot" data-node-id="9:237" data-name="Radio Button"></span>
+                    <span class="radio-copy" data-node-id="9:238" data-name="Container">
+                      <strong>Añadir a la cola</strong>
+                      <small>Agregar en orden secuencial</small>
+                    </span>
+                  </label>
+                </div>
+              </section>
+
+              <section class="form-block" data-node-id="9:243" data-name="Container">
+                <h3 class="block-title" data-node-id="9:244" data-name="Heading 3">Nueva Tarea</h3>
+
+                <div class="field" data-node-id="9:247" data-name="Container">
+                  <label class="field-label" for="nombre-tarea" data-node-id="9:248" data-name="Label">
+                    Nombre de la tarea
+                  </label>
+                  <input
+                    id="nombre-tarea"
+                    class="text-input"
+                    type="text"
+                    placeholder="Ej: Corte de material"
+                    data-node-id="9:250"
+                    data-name="Text Input"
+                  />
+                </div>
+
+                <div class="field" data-node-id="9:252" data-name="Container">
+                  <label class="field-label" for="ciclos" data-node-id="9:253" data-name="Label">Ciclos</label>
+                  <input
+                    id="ciclos"
+                    class="text-input"
+                    type="number"
+                    min="0"
+                    placeholder="0"
+                    data-node-id="9:255"
+                    data-name="Number Input"
+                  />
+                </div>
+
+                <button
+                  class="add-task-btn disabled"
+                  type="button"
+                  disabled
+                  data-node-id="9:257"
+                  data-name="Button"
+                >
+                  <img
+                    class="add-process-icon"
+                    data-node-id="9:258"
+                    data-name="Icon"
+                    src="http://localhost:3845/assets/14facc576a05ff58abb4b7a5e45bbb08d52475bb.svg"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                  <span data-node-id="9:261">Agregar Tarea</span>
+                </button>
+              </section>
+
+              <section class="task-list" data-node-id="9:262" data-name="Container">
+                <h3 class="block-title" data-node-id="9:263" data-name="Heading 3">Tareas del proceso (0)</h3>
+                <p class="task-list-empty" data-node-id="9:265" data-name="Paragraph">No hay tareas en este proceso</p>
+              </section>
+
+              <div class="actions" data-node-id="9:267" data-name="Container">
+                <button class="btn-ghost" type="button" data-node-id="9:268" data-name="Button">Cancelar</button>
+                <button class="btn-solid-disabled" type="button" disabled data-node-id="9:270" data-name="Button">
+                  Guardar Proceso
+                </button>
+              </div>
+
+              <p class="hint" data-node-id="9:272" data-name="Paragraph">Ingresa un nombre para el proceso</p>
+            </article>
+          </section>
+        </div>
+      </section>
+    </main>
+    <script src="proceso.js"></script>
+  </body>
+</html>
