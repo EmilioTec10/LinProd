@@ -7,13 +7,16 @@ from linprod_core import ProductionLine, Process, Task
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
+#inicia la aplicación Flask
+#la carpeta raíz hace de directorio de archivos estaticos
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)
 
+#activa la linea de producción
 line = ProductionLine()
 _process_config: list = []
 
-
+#Reconstruye la instancia `line` desde cero usando `_process_config`.
 def _rebuild_line() -> None:
     global line
     line = ProductionLine()
@@ -25,6 +28,7 @@ def _rebuild_line() -> None:
     line.link_processes()
 
 
+#serializa la tarea, incluyendo metricas en tiempo real
 def _serial_task(task: Task, idx: int) -> dict:
     return {
         'index': idx,
@@ -40,6 +44,7 @@ def _serial_task(task: Task, idx: int) -> dict:
     }
 
 
+#serializa procesos completos, incluyendo sus tareas
 def _serial_process(process: Process, idx: int) -> dict:
     return {
         'index': idx,
@@ -50,6 +55,7 @@ def _serial_process(process: Process, idx: int) -> dict:
     }
 
 
+#devuelve el estado completo de la simulación en el cilo actual
 def _serial_state() -> dict:
     return {
         'current_cycle': line.current_cycle,
@@ -65,15 +71,19 @@ def _serial_state() -> dict:
     }
 
 
+# genera la reportería
 def _serial_report() -> dict:
     completed = line.completed_products
+    #tiempo de procesamiento sin esperas
     total_cycles_per_product = sum(
         t.process_time for proc in line.processes for t in proc.tasks
     )
     task_count    = sum(1 for proc in line.processes for _ in proc.tasks)
     process_count = sum(1 for _ in line.processes)
+    #productos completados en 1 hora
     pph = round(3600 / total_cycles_per_product, 1) if total_cycles_per_product > 0 else 0
 
+    #estructura base, no importa si no hay productos terminados
     base = {
         'num_products': line.num_products,
         'config': {
@@ -92,10 +102,12 @@ def _serial_report() -> dict:
     if not completed:
         return base
 
+    #calculos y metricas de productos terminados
     exit_cycles = [p.exit_cycle for p in completed if p.exit_cycle is not None]
     durations   = [p.exit_cycle - p.entry_cycle for p in completed if p.exit_cycle is not None]
     avg_duration = round(sum(durations) / len(durations), 1) if durations else 0
 
+    #registra los cuellos de botella
     bottleneck_task = None
     bottleneck_proc = '—'
     max_wait = -1
@@ -106,6 +118,7 @@ def _serial_report() -> dict:
                 bottleneck_task = task
                 bottleneck_proc = process.name
 
+    #registra la tarea más larga
     longest_task = None
     longest_proc = '—'
     for process in line.processes:
@@ -117,6 +130,7 @@ def _serial_report() -> dict:
     wait_times = [p.total_wait_time for p in completed]
     avg_wait   = round(sum(wait_times) / len(wait_times), 1) if wait_times else 0
 
+    #estadisticaas individuales por tarea
     per_task_stats = [
         {
             'process_name':      proc.name,
